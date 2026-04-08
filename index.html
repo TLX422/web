@@ -1,0 +1,166 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+    <meta charset="UTF-8">
+    <title>池海秀 · 个人名片</title>
+    <style>
+        * { margin: 0; padding: 0; box-sizing: border-box; }
+        body {
+            background: #cd6e94;
+            font-family: 'Segoe UI', Arial, sans-serif;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            min-height: 100vh;
+            padding: 20px;
+        }
+        .card {
+            background: rgb(243, 127, 127);
+            width: 350px;
+            padding: 25px 20px;
+            border-radius: 32px;
+            text-align: center;
+            box-shadow: 0 12px 24px rgba(0,0,0,0.2);
+            transition: transform 0.2s;
+        }
+        .card:hover {
+            transform: translateY(-5px);
+        }
+        .avatar {
+            width: 110px;
+            height: 110px;
+            border-radius: 50%;
+            object-fit: cover;
+            margin-bottom: 15px;
+            border: 3px solid white;
+            box-shadow: 0 4px 10px rgba(0,0,0,0.2);
+        }
+        h1 {
+            font-size: 28px;
+            margin-bottom: 5px;
+            color: #191b0c;
+            letter-spacing: 1px;
+        }
+        .intro {
+            color: #77318e;
+            font-size: 15px;
+            margin-bottom: 20px;
+            font-weight: bold;
+        }
+        /* 个性签名区域 */
+        .signature {
+            background: rgba(255,255,240,0.6);
+            padding: 12px;
+            border-radius: 40px;
+            margin: 15px 0;
+            font-style: italic;
+            font-size: 14px;
+            color: #2c3e2f;
+            cursor: pointer;
+            transition: 0.2s;
+        }
+        .signature:hover {
+            background: rgba(255,255,200,0.9);
+            transform: scale(1.01);
+        }
+        /* 联系方式区域 */
+        .contact {
+            display: flex;
+            justify-content: center;
+            gap: 20px;
+            margin: 20px 0 15px;
+            flex-wrap: wrap;
+        }
+        .contact a {
+            text-decoration: none;
+            background: #fff0e0;
+            padding: 6px 14px;
+            border-radius: 40px;
+            font-size: 14px;
+            font-weight: bold;
+            color: #a27f0c;
+            transition: 0.2s;
+            display: inline-flex;
+            align-items: center;
+            gap: 6px;
+        }
+        .contact a:hover {
+            background: #a27f0c;
+            color: white;
+            transform: translateY(-2px);
+        }
+        button {
+            background-color: #a27f0c;
+            color: white;
+            border: none;
+            padding: 10px 24px;
+            border-radius: 40px;
+            font-size: 16px;
+            cursor: pointer;
+            font-weight: bold;
+            margin-top: 5px;
+            transition: 0.2s;
+        }
+        button:hover {
+            background-color: #7a5e0a;
+            transform: scale(0.98);
+        }
+        footer {
+            font-size: 10px;
+            margin-top: 20px;
+            color: #fff0e0;
+        }
+    </style>
+</head>
+<body>
+    <div class="card">
+        <!-- 头像 -->
+        <img class="avatar" src="https://tse2-mm.cn.bing.net/th/id/OIP-C.JYAX87-4Wer86Aelxbk6AAAAAA?w=202&h=202&c=7&r=0&o=7&dpr=1.5&pid=1.7&rm=3">
+        <h1>池海秀</h1>
+        <div class="intro"><b>前端初学者 | 热爱生命</b></div>
+
+        <!-- 个性签名（点击可随机更换） -->
+        <div class="signature" id="signatureText">
+            🌱 保持热爱，奔赴山海 🌊
+        </div>
+
+        <!-- 联系方式：邮箱、GitHub、个人博客 -->
+        <div class="contact">
+            <a href="mailt0:2938085760@qq.com ">📧 邮箱</a >
+            <a href="https://github.com/" target="_blank">🐙 GitHub</a >
+        </div>
+
+        <!-- 打招呼按钮 -->
+        <button id="greetBtn"><b>✨ Hi ~ ✨</b></button>
+        <footer>—— 每天进步一点点 ——</footer>
+    </div>
+
+    <script>
+        // 1. 按钮打招呼功能
+        var btn = document.getElementById('greetBtn');
+        btn.addEventListener('click', function() {
+            alert('你好呀！欢迎来到我的第一个网页！\n愿你今天也有好心情 💖');
+        });
+
+        // 2. 个性签名库（创意点：点击随机更换）
+        var signatureList = [
+            "🌱 保持热爱，奔赴山海 🌊",
+            "🌸 生命是一万次春和景明",
+            "⭐ 代码写浪漫，Bug 也温柔",
+            "🍃 知足且上进，温柔且坚定",
+            "🎈 做一个自由又自律的人",
+            "💪 每天消灭一个 Bug！",
+            "🌟 热爱可抵岁月漫长",
+            "📖 读过的书，都会变成光"
+        ];
+
+        var sigDiv = document.getElementById('signatureText');
+        sigDiv.addEventListener('click', function() {
+            var randomIndex = Math.floor(Math.random() * signatureList.length);
+            sigDiv.innerHTML = signatureList[randomIndex];
+        });
+
+        console.log("🎉 欢迎来到池海秀的个人名片！点击签名试试~");
+    </script>
+</body>
+</html>

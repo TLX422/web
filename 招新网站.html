@@ -1,0 +1,1081 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+    <meta charset="UTF-8">
+    <!-- 移动端适配：视口宽度=设备宽度，初始缩放比例1.0 -->
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Geek组招新网站 加入我们</title>
+    <style>
+        /* 全局样式重置：清除默认内外边距，盒模型统一，设置全局字体 */
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            font-family: "Microsoft Yahei", sans-serif;
+        }
+
+        /* 顶部导航栏：固定定位，悬浮在页面最上方 */
+        .navbar {
+            position: fixed;
+            left: 0;
+            top:0;
+            width: 100%;
+            background: #ffb900; /* 导航栏背景色 */
+            display: flex;
+            justify-content: space-around; /* 导航项均匀分布 */
+            gap: 0;
+            z-index: 999; /* 最高层级，不被其他元素遮挡 */
+            padding: 8px 0;
+            border-bottom: 2px solid #ff8c00; /* 底部边框 */
+        }
+
+        /* 导航栏链接样式 */
+        .navbar a {
+            background: transparent;
+            color: #ffffff;
+            padding: 6px 20px;
+            text-decoration: none; /* 清除下划线 */
+            border-radius: 8px;
+            font-size: 16px;
+            font-weight: 500;
+            position: relative; /* 用于子元素绝对定位 */
+            transition: color 0.3s ease; /* 颜色过渡动画 */
+        }
+
+        /* 导航链接 hover 效果：文字变灰 */
+        .navbar a:hover {
+            color: #b6b3b3;
+            background-color: #e68a00;
+            border-radius: 8px;
+        }
+
+        /* Introduction 导航项的悬浮二维码容器 默认隐藏 */
+        .navbar a[href="#introduction"] .qrcode-hover {
+            display: none;
+            position: absolute;
+            top: 100%;
+            left: 50%;
+            transform: translateX(-50%); /* 水平居中 */
+            width: 180px;
+            height: auto;
+            padding: 5px;
+            background: #fff;
+            border: 1px solid #eee;
+            border-radius: 4px;
+            box-shadow: 0 2px 8px rgba(0,0,0,0.1); /* 轻微阴影 */
+            z-index: 1000;
+            margin-top: 5px;
+        }
+
+        /* 二维码图片自适应 */
+        .navbar a[href="#introduction"] .qrcode-hover img {
+            width: 100%;
+            height: auto;
+        }
+
+        /* hover 时显示二维码 */
+        .navbar a[href="#introduction"]:hover .qrcode-hover {
+            display: block; 
+        }
+
+        /* 导航链接后添加下拉箭头 */
+        .navbar a::after {
+            content: "▼";
+            font-size: 10px;
+            margin-left: 5px;
+            color: #000;
+        }
+
+        /* NewThread 链接特殊图标替换箭头 */
+        .navbar a[href*="new-thread"]::after {
+            content: "♠";
+        }
+
+        /* 顶部占位符：抵消固定导航栏的高度，防止内容被遮挡 */
+        .top-placeholder {
+            height: 60px;
+        }
+
+        /* 页面主容器：全屏宽度，禁止横向滚动 */
+        .container {
+            width: 100%;
+            max-width: 100%;
+            margin: 0 auto;
+            padding: 0;
+            overflow-x: hidden;
+        }
+
+        /* 头部banner区域：全屏高度，背景图，居中显示logo */
+        .header-section {
+            text-align: center;
+            padding: 20px 0;
+            position: relative;
+            width: 100vw;
+            height: 100vh;
+            min-height: 600px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            background: url(images/background_Homepage.png) no-repeat center center;
+            background-size: cover; /* 背景图覆盖 */
+            background-position: top center;
+        }
+
+        /* Geek logo 样式：绝对居中，hover放大 */
+        .geek-logo {
+            max-width: 500px;
+            height: auto;
+            margin: 0 auto;
+            display: block;
+            position: absolute;
+            top: 40%;
+            left: 50%;
+            transform: translate(-50%, -50%);
+            z-index: 10;
+            transition: transform 0.3s ease;
+        }
+
+        /* logo hover 放大效果 */
+        .geek-logo:hover {
+            transform: translate(-50%, -50%) scale(1.1);
+        }
+
+        /* 头部插画：隐藏不显示 */
+        .header-illustration {
+            display: none;
+        }
+
+        /* ========== Introduction 模块 ========== */
+        .intro-section {
+            padding: 40px 5%;
+             position: relative;  /* 让图片能定位在旁边 */
+        }
+        .section-title {
+            font-size: 32px;
+            color: #00008B;
+            text-align: center;
+            margin-bottom: 40px;
+             position: relative;
+        }
+
+       .wave-intro-section {
+    /* 1. 背景图设置：波浪图片 */
+    background-image: url(images/decoration_Transition.png);
+    background-repeat: no-repeat;
+    background-position: center; /* 背景图居中 */
+    background-size: 100% auto; /* 宽度撑满，高度自适应 */
+
+    /* 2. 模块大小：和背景图高度匹配 */
+    height: 120px; /* 可以根据你的波浪图高度调整 */
+    display: flex;
+    align-items: center;
+    justify-content: center; /* 文字水平+垂直居中 */
+}
+
+.section-title {
+    font-size: 32px;
+    color: #00008B;
+    margin: 0; /* 去掉默认边距，避免文字偏移 */
+}
+
+
+          /* 卡片设置 */
+        .role-card {
+            background: white;
+            border: 2px solid #aaa;
+            border-radius: 12px;
+            padding: 25px;
+            margin-bottom: 25px;
+            display: flex;
+            align-items: center;
+            gap: 20px;
+        }
+        .role-card:nth-child(even) {
+            flex-direction: row-reverse;
+        }
+        .role-content {
+            flex: 1;
+        }
+        .role-title {
+            font-size: 24px;
+            font-weight: bold;
+            margin-bottom: 10px;
+        }
+        .role-quote {
+            font-size: 18px;
+            color: #ff69b4;
+            margin: 10px 0;
+            line-height: 1.4;
+        }
+        .role-desc {
+            font-size: 14px;
+            line-height: 1.6;
+            color: #333;
+        }
+        .role-img {
+            width: 200px;
+            height: 220px;
+            object-fit: contain;
+        }
+
+    
+        /* 卡片板块：介绍团队各个方向 */
+        .card-section {
+            margin: 40px 0;
+            width: 100%;
+            padding:0 20px;
+        }
+
+        /* 卡片通用样式：左右布局，带边框 */
+        .card {
+            display: flex;
+            align-items: center;
+            margin: 30px 0;
+            padding: 20px;
+            border: 2px solid #000;
+            border-radius: 8px;
+            box-shadow: none;
+            background: #fff;
+            position: relative;
+            overflow: hidden;
+            width: 100%;
+            max-width: 100%;
+        }
+
+        /* 卡片交替左右布局 */
+        .card:nth-child(1) { flex-direction: row; }
+        .card:nth-child(2) { flex-direction: row-reverse; }
+        .card:nth-child(3) { flex-direction: row; }
+        .card:nth-child(4) { flex-direction: row-reverse; }
+
+        /* 卡片图片容器：固定尺寸，hover旋转缩放 */
+        .card-img {
+            width: 250px;
+            height: 250px;
+            margin: 0 20px;
+            border-radius: 0;
+            overflow: hidden;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            transition: transform 0.5s ease;
+        }
+
+        /* 图片 hover 动画 */
+        .card-img:hover {
+            transform: rotate(5deg) scale(1.05);
+        }
+
+        /* 卡片图片自适应填充 */
+        .card-img img {
+            width: 100%;
+            height: 100%;
+            object-fit: contain;
+            background: #fff;
+        }
+
+        /* 卡片内容区域：自适应剩余宽度 */
+        .card-content {
+            flex: 1;
+            padding: 0 10px;
+        }
+
+        /* 卡片标题样式 */
+        .card-title {
+            font-size: 50px;
+            margin-bottom: 10px;
+            color: #0b0b0b;
+            font-weight: bold;
+            font-family: "SimHei", sans-serif;
+        }
+
+        /* 卡片标语样式 */
+        .card-slogan {
+            margin-bottom: 15px;
+            font-style: normal;
+            font-weight: bold;
+            font-size: 18px;
+        }
+
+        /* 四个卡片标语分别设置不同颜色和引号 */
+        .card:nth-child(1) .card-slogan { 
+            color: #0066cc; 
+            quotes: "\"" "\"";
+        }
+        .card:nth-child(1) .card-slogan::before { content: open-quote; }
+        .card:nth-child(1) .card-slogan::after { content: close-quote; }
+
+        .card:nth-child(2) .card-slogan { 
+            color: #e6399b; 
+            quotes: "'" "'";
+        }
+        .card:nth-child(2) .card-slogan::before { content: open-quote; }
+        .card:nth-child(2) .card-slogan::after { content: close-quote; }
+
+        .card:nth-child(3) .card-slogan { color: #009688; }
+        .card:nth-child(4) .card-slogan { color: #ff4500; }
+
+        /* 卡片描述文本：两端对齐 */
+        .card-desc {
+            font-size: 15px;
+            line-height: 1.6;
+            color: #000;
+            text-align: justify;
+        }
+
+        /* About Us 板块：虚线边框，背景浅灰 */
+        .about-section {
+            margin: 40px 0;
+            padding: 20px 20px;
+            border: 3px dashed #999;
+            border-radius: 8px;
+            background: #f9f9f9;
+            position: relative;
+            width: 100%;
+        }
+
+        /* About 板块右下角蝴蝶装饰 */
+        .about-section::after {
+            content: "";
+            position: absolute;
+            width: 150px;
+            height: 150px;
+            bottom: -20px;
+            right: -20px;
+            background: url("images/decoration_Butterfly.png");
+            background-size: contain;
+            z-index: 1;
+        }
+
+        /* About 板块左上角装饰角 */
+        .about-section::before {
+            content: "";
+            position: absolute;
+            width: 30px;
+            height: 30px;
+            top: -10px;
+            left: -10px;
+            background: url(images/decoration_Decoration.png);
+            border: 2px solid #999;
+            border-right: none;
+            border-bottom: none;
+        }
+
+        /* About 标题 */
+        .about-title {
+            font-size: 60px;
+            margin-bottom: 25px;
+            text-align: center;
+            color: #575555;
+        }
+
+        /* About 卡片容器：弹性布局，自动换行 */
+        .about-cards {
+            display: flex;
+            justify-content: space-around;
+            flex-wrap: wrap;
+            gap: 30px;
+            width: 100%;
+        }
+
+        /* About 小卡片：紫色边框，hover放大 */
+        .about-card {
+            width: 200px;
+            height: 260px;
+            padding: 15px;
+            border: 3px solid #8729a3;
+            border-radius: 8px;
+            text-align: center;
+            background: #fff;
+            transition: transform 0.3s ease, box-shadow 0.3s ease;
+        }
+
+        /* 小卡片 hover 效果 */
+        .about-card:hover {
+            transform: scale(1.08);
+            box-shadow: 0 4px 10px rgba(0,0,0,0.1);
+        }
+
+        /* 小卡片文本样式 */
+        .about-card-text {
+            font-size: 14px;
+            color: #666;
+            line-height: 1.5;
+
+        }
+           /* 把图片放中间 */
+      .about-card-text img {
+            display: block;/*把图片变成块级元素 */
+            margin: 0 auto 10px;
+            width: 60px;
+            height: 60px;
+             object-fit: contain;/*图片不变形 */
+}
+
+
+           /* Contact US部分 */
+        /* 联系我们板块：多层边框，青色主题 */
+        .contact-section {
+             position: relative; /* 必须开启，让角落装饰图能定位 */
+            margin: 40px 0;
+            padding: 30px 20px;
+            border: 3px solid #00ced1;
+            border-radius: 12px 8px 15px 10px; /* 不规则圆角 */
+            background: #f5fffe;
+            position: relative;
+            background-image: none;
+            box-shadow: 0 0 0 4px #f5fffe, 0 0 0 7px #e0ffff; /* 多层外边框 */
+            width: 100%;
+            overflow: hidden; /* 防止装饰图超出边框 */
+        }
+
+        /* 联系板块各类装饰元素：绝对定位 */
+        .contact-section .decor-left {
+            position: absolute;
+            top: 20%;
+            left: 0;
+            width: 150px;
+            height: 100%;
+            transform: translateY(-50%);
+            background: url(images/decoration_TreeWithSometing.png) no-repeat center;
+            background-size: contain;
+            z-index: 1;
+
+        }
+        /* 甲壳虫图片 */
+        .contact-section .decor-ladybug {
+            position: absolute;
+            bottom: -5px;
+            left: -5px;
+            width: 60px;
+            height: 60px;
+            background: url(images/decoration_Ladybug.png) no-repeat center;
+            background-size: contain;
+            z-index: 1;
+        }
+        /* 变色龙图片 */
+        .contact-section .decor-right {
+            position: absolute;
+            bottom: -20px;
+            right: 300px;
+            width: 250px;
+            height: 150px;
+            background: url(images/decoration_Chameleon.png) no-repeat center;
+            background-size: contain;
+            z-index: 1;
+        }
+
+
+
+        /*大树图片 */
+        .contact-section .decor-rights {
+            position: absolute;
+            bottom: -20px;
+            right: -180px;
+            width: 500px;
+            height: 400px;
+            background: url(images/decoration_Tree.png) no-repeat center;
+            background-size: contain;
+            z-index: 1;
+        }
+                /* 1. 标题容器：让图片+标题整体居中 */
+          .contact-title-wrap {
+                   display: flex;
+                    align-items: center; /* 让图片和标题垂直居中对齐 */
+                   justify-content: center; /* 让整个容器在页面水平居中 */
+                   gap: 10px; /* 图片和标题之间的间距，可改 */
+                   margin-bottom: 20px; /* 标题和下面列表的间距 */
+                  }
+                  /* 2. 左侧的图片样式 */
+                    .contact-icon {
+               width: 32px; /* 图片宽度，可改 */
+                     height: 32px; /* 图片高度，可改 */
+               object-fit: contain; /* 图片不变形 */
+                  }
+
+
+        /* 联系板块标题 */
+        .contact-title {
+            font-size: 30px;
+            margin-bottom: 20px;
+            margin: 0;
+            text-align: center;
+            color: #008b8b;
+            font-weight: bold;
+            text-shadow: 1px 1px 0 #fff, 2px 2px 0 #008b8b; /* 文字阴影 */
+        }
+
+        /* 联系列表样式：无默认列表样式 */
+        .contact-list {
+            align-items: center;
+            list-style: none;
+            margin-bottom: 20px;
+            text-align: center; /* 让所有文字居中 */
+            margin: 0 auto; /* 让整个列表块水平居中 */
+            max-width: 800px; /* 限制文字宽度，避免太宽，可按需调整 */
+            line-height: 1.8;
+            font-size: 14px;
+            color: #3f3e3e;
+            position: relative;
+            z-index: 2;
+            padding-left: 10px;
+        }
+
+        /* 列表项样式 */
+        .contact-list li {
+            padding-left: 20px;
+            position: relative;
+            margin: 8px 0;
+            line-height: 1.6; /* 行高更舒服 */
+            transform: skew(-1deg); /* 轻微倾斜 */
+        }
+
+        /* 列表项自定义项目符号 */
+        .contact-list li::before {
+            content: "•";
+            position: absolute;
+            left: 0;
+            color: #008b8b;
+            font-weight: bold;
+            font-size: 18px;
+        }
+
+        /* 邮箱复制文本样式 */
+        .contact-email {
+            color: #0066cc;
+            cursor: pointer;
+            text-decoration: underline;
+        }
+        .contact-email:hover {
+            color: #0056b3;
+        }
+
+        /* 联系按钮容器：居中排列 */
+        .contact-btns {
+            margin-top: 15px;
+            display: flex;
+            gap: 10px;
+            justify-content: center;
+            position: relative;
+            z-index: 2;
+        }
+
+        /* 按钮通用样式：绿色，立体效果 */
+        .contact-btn {
+            padding: 8px 18px;
+            background: #228b22;
+            color: #fff;
+            border: none;
+            border-radius: 4px;
+            cursor: pointer;
+            text-decoration: none;
+            font-size: 14px;
+            transition: background 0.3s ease;
+            border: 1px solid #006400;
+            box-shadow: 2px 2px 0 #006400;
+        }
+
+        /* 按钮 hover 按压效果 */
+        .contact-btn:hover {
+            background: #006400;
+            box-shadow: 1px 1px 0 #006400;
+            transform: translate(1px, 1px);
+        }
+
+        /* 二维码弹窗：默认隐藏，全屏遮罩 */
+        .qrcode-modal {
+            display: none;
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100vw;
+            height: 100vh;
+            background: rgba(0,0,0,0.6); /* 半透明黑色 */
+            z-index: 1000;
+            align-items: center;
+            justify-content: center;
+            backdrop-filter: blur(2px); /* 背景模糊 */
+            transition: opacity 0.3s ease;
+        }
+
+        /* 弹窗内容区域：白色卡片 */
+        .qrcode-content {
+            background: #fff;
+            padding: 25px;
+            border-radius: 12px;
+            text-align: center;
+            box-shadow: 0 5px 20px rgba(0,0,0,0.2);
+            max-width: 350px;
+            width: 90%;
+            transform: scale(0.9); /* 初始缩小 */
+            transition: transform 0.3s ease;
+        }
+
+        /* 弹窗显示时放大内容 */
+        .qrcode-modal.show .qrcode-content {
+            transform: scale(1);
+        }
+
+        /* 弹窗内二维码图片 */
+        .qrcode-img {
+            width: 280px;
+            height: auto;
+            margin: 15px 0;
+            border: 1px solid #eee;
+            border-radius: 8px;
+            padding: 10px;
+            background: #fff;
+        }
+
+        /* 弹窗标题 */
+        .qrcode-content h3 {
+            font-size: 18px;
+            color: #ff8c00;
+            margin-bottom: 10px;
+        }
+
+        /* 弹窗文本 */
+        .qrcode-content p {
+            font-size: 14px;
+            color: #666;
+            margin-bottom: 15px;
+        }
+
+        /* 关闭按钮 */
+        .close-btn {
+            margin-top: 10px;
+            padding: 8px 20px;
+            background: #ff8c00;
+            color: #fff;
+            border: none;
+            border-radius: 4px;
+            cursor: pointer;
+            font-size: 14px;
+            transition: background 0.3s ease;
+        }
+        .close-btn:hover {
+            background: #e68a00;
+        }
+
+        /* 链接提示文字 */
+        .link-tip {
+            font-size: 12px;
+            color: #888;
+            margin-top: 8px;
+            text-align: center;
+            position: relative;
+            z-index: 2;
+        }
+
+       /* 问答板块：背景图 */
+         .qa-section {
+            margin: 40px 0;
+            padding: 20px;
+            width: 100%;
+            min-height: 300px;
+            background-image: url("images/background_QA.png");
+            background-repeat: no-repeat;
+            background-position: center center;
+            background-size: cover; 
+            border-radius: 8px;
+            box-shadow: 0 2px 5px rgba(0,0,0,0.05);
+            text-align: center;
+        }
+          .qa-question {
+           background: transparent;
+           display: flex;
+           flex-direction: column;
+           align-items: center;
+           color: #4b4949; /* 灰色文字，在蓝色背景上更清晰 */
+           padding: 40px 20px;
+           font-size: 18px;
+           margin: 10px 0;
+           text-align: center;
+}
+        /* 问答标题 */
+        .qa-title {
+            font-size: 22px;
+            margin-bottom: 20px;
+            text-align: center;
+            color: #060505;
+        }
+
+        .qa-item:hover {
+            box-shadow: 0 2px 5px rgba(0,0,0,0.05);
+        }
+
+        /* 问题标题：可点击，右侧+号 */
+        .qa-question {
+            padding: 12px 15px;
+            cursor: pointer;
+            font-weight: 500;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            text-align: center;
+            color: #676464;
+        }
+        .qa-question::after {
+            content: "+";
+            font-size: 18px;
+            color: #ff8c00;
+            transition: transform 0.3s ease;
+        }
+
+        /* 问题展开后：-号 */
+        .qa-question.active::after {
+            content: "-";
+            text-align: center;
+            transform: rotate(180deg);
+        }
+
+        /* 回答内容：默认隐藏，展开动画 */
+         .qa-answer {
+            padding: 0 15px;
+            max-height: 0;
+            overflow: hidden;
+            transition: max-height 0.3s ease;
+            line-height: 1.8;
+            font-size: 14px;
+            color: #ffffff;
+            text-align: center;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+        }
+
+        /* 显示回答 */
+        .qa-answer.show {
+            padding: 0 15px 15px;
+            text-align: center;
+            max-height: 500px;
+        }
+
+        /* ===================== 移动端响应式样式 ===================== */
+        @media (max-width: 768px) {
+            /* 卡片统一垂直排列 */
+            .card {
+                flex-direction: column !important;
+            }
+            .card-img {
+                margin: 10px 0;
+            }
+            /* 缩小二维码 */
+            .qrcode-img {
+                width: 220px;
+            }
+            /* 缩小logo */
+            .geek-logo {
+                max-width: 280px;
+            }
+            /* 缩小头部高度 */
+            .header-section {
+                height: 400px;
+                min-height: auto;
+            }
+            /* 移动端隐藏所有装饰图片 */
+            .contact-section .decor-left,
+            .contact-section .decor-bottom-left,
+            .contact-section .decor-ladybug,
+            .contact-section .decor-right,
+            .about-section::after {
+                display: none;
+            }
+            /* 缩小导航栏 */
+            .navbar {
+                padding: 6px 0;
+            }
+            .navbar a {
+                font-size: 14px;
+                padding: 4px 10px;
+            }
+            /* 移动端隐藏导航栏二维码 */
+            .navbar a[href="#introduction"] .qrcode-hover {
+                display: none !important;
+            }
+            /* 移动端禁用hover动画 */
+            .card-img:hover {
+                transform: none;
+            }
+            .about-card:hover {
+                transform: none;
+                box-shadow: none;
+            }
+            .geek-logo:hover {
+                transform: translate(-50%, -50%) scale(1);
+            }
+        }
+    </style>
+</head>
+<body>
+    <!-- 顶部导航栏 -->
+    <nav class="navbar">
+        <a href="#introduction">
+            Introduction
+            <!-- 导航悬浮二维码 -->
+            <div class="qrcode-hover">
+                <img src="images/qrcode_1699620268564.jpg" alt="Geek招新群二维码">
+            </div>
+        </a>
+        <a href="#about">About US<span>👤</span></a>
+        <a href="https://campus.new-thread.com/" target="_blank">NewThread<span>🏠</span></a>
+        <a href="#contact">Contact Us<span>📞</span></a>
+        <a href="#qa">Q&A<span>💬</span></a>
+    </nav>
+
+    <!-- 顶部占位，防止被导航遮挡 -->
+    <div class="top-placeholder"></div>
+
+    <!-- 页面主内容容器 -->
+    <div class="container">
+        <!-- 头部banner -->
+        <div class="header-section">
+            <img src="images/decoration_Geek.png" alt="Geek Logo" class="geek-logo">
+            <img src="images/background_Homepage.png" alt="Geek团队插画" class="header-illustration">
+        </div>
+<!-- ========== Introduction 模块 ========== -->
+<!-- Introduction 波浪背景模块 -->
+<div class="wave-intro-section">
+    <h2 class="section-title">Introduction ∨</h2>
+</div>
+        <!-- 团队方向介绍卡片 -->
+        <section id="introduction" class="card-section">
+            <div class="card">
+                <div class="card-content">
+                    <h3 class="card-title">开发程序猿</h3>
+                    <p class="card-slogan">Stay Hungry，Stay Foolish</p>
+                    <p class="card-desc">
+                        前端：前端开发是创建Web或app视觉界面呈现给用户的过程通过HTML，CSS及JavaScript以及衍生出来的各种技术、框架、解决方案，实现互联网产品的用户界面交互。<br>
+                        后端：通常也称服务器端开发。不对用户显示,负责处理前端的请求，进行逻辑处理和数据交互。<br>
+                        客户端: 移动应用开发是为了小型、无线计算设备编写软件的流程和程序的集合，例如智能手机或平板电脑。
+                    </p>
+                </div>
+                <div class="card-img">
+                    <img src="images/Geek_Programmer.png" alt="开发程序猿配图">
+                </div>
+            </div>
+
+            <div class="card">
+                <div class="card-content">
+                    <h3 class="card-title">产品经理</h3>
+                    <p class="card-slogan">好的软件的特征是,明明没用过，但总觉得用过似的。</p>
+                    <p class="card-desc">
+                        PM是针对某一项或是某一类的产品进行规划和管理的人员。<br>
+                        PM需要拥有缜密的产品逻辑思维，研究用户心理，负责产品的整个生命周期。<br>
+                        PM参与产品的UI和交互设计，为设计和开发确定产品原型，能够将产品变得有个性,操作变得舒适简单、自由。<br>
+                        PM需要一定的文档能力和沟通能力，能够在团队合作的过程中跟各个角色进行有效沟通。
+                    </p>
+                </div>
+                <div class="card-img">
+                    <img src="images/Geek_PM.png" alt="产品经理配图">
+                </div>
+            </div>
+
+            <div class="card">
+                <div class="card-content">
+                    <h3 class="card-title">游戏开发</h3>
+                    <p class="card-slogan">TECH OTAKUS SAVE THE WORLD</p>
+                    <p class="card-desc">
+                        对游戏开发的热爱和追求，使我们相聚于此。涉及计算机图形学的学习，我们使用物理模拟引擎Unity开发我们所追求的世界，一个故事，一个角色，在我们的世界里改变现实，创造新的可能，我们参与，我们改变，我们创造...
+                    </p>
+                </div>
+                <div class="card-img">
+                    <img src="images/Geek_Game.png" alt="游戏开发配图">
+                </div>
+            </div>
+
+            <div class="card">
+                <div class="card-content">
+                    <h3 class="card-title">安全</h3>
+                    <p class="card-slogan">路漫漫其修远兮，非大毅力者不能</p>
+                    <p class="card-desc">
+                        我们主要学习Web安全和二进制安全。在Web安全中我们将学习和实践Web漏洞挖掘技术，也将探索和讨论Web安全实践的方法。在二进制安全中我们专注于分析和防御与计算机程序、系统相关的威胁，同时实践漏洞分析和修补。耐心和钻研缺一不可。
+                    </p>
+                </div>
+                <div class="card-img">
+                    <img src="images/Geek_security.png" alt="安全板块配图">
+                </div>
+            </div>
+        </section>
+
+        <!-- 关于我们 -->
+        <section id="about" class="about-section">
+            <h2 class="about-title">About Us</h2>
+            <div class="about-cards">
+                <div class="about-card">
+                    <div class="about-card-text">
+                        <img src="images/about_Speech.png" alt="Speech" style="width: 60px; height: 60px; margin: 0 auto 10px;" >
+                        每周我们会举行一次技术例会，用来汇报我们的学习内容，供成员之间交流学习。
+                    </div>
+                </div>
+                <div class="about-card">
+                    <div class="about-card-text">
+                        <img src="images/about_Diversity.png" alt="Diversity" style="width: 60px; height: 60px; margin: 0 auto 10px;">
+                        多元化是我们的特色。在这里，你可以拥有多种方向选择，前后端、安全、AI、产品/设计、游戏等。
+                    </div>
+                </div>
+                <div class="about-card">
+                    <div class="about-card-text">
+                        <img src="images/about_Time.png" alt="Time" style="width: 60px; height: 60px; margin: 0 auto 10px;">
+                        耐心、毅力是我们必备的品质，每周我们会至少花30小时在实验室中。以保证技术的精进。
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- 联系我们 -->
+        <section id="contact" class="contact-section">
+            <div class="decor-left"></div>
+            <div class="decor-bottom-left"></div>
+            <div class="decor-ladybug"></div>
+            <div class="decor-right"></div>
+            <div class="decor-rights"></div>
+            <div class="contact-title-wrap">
+                <img src="images/decoration_Leaves.png" alt="联系图标" class="contact-icon">
+              <h2 class="contact-title">Contact Us</h2>
+            </div>
+            <ul class="contact-list">
+                <li>热爱计算机，具有geek精神，喜欢DIY，动手能力较强</li>
+                <li>有编程/算法/硬件基础为佳(有作品可附上)</li>
+                <li>有足够的空余时间，热爱思考，对事物有自己的见解</li>
+                <li>
+                    ps:非新思路统招只有通过发送邮件自我介绍后，收到邮件回执后才会被允许进群,在读学生, 都可邮件到
+                    <span class="contact-email" id="emailCopy">newthread_geek@outlook.com</span>
+                    报名加入.(信中需备注个人基本信息以及意向方向,此招新活动为长期招新)
+                </li>
+            </ul>
+            <div class="contact-btns">
+                <button class="contact-btn" id="qqBtn">QQ-Group</button>
+                <a href="mailto:newthread_geek@outlook.com" class="contact-btn">E-mail</a>
+                <a href="https://github.com/NewThread-GeekGroup" class="contact-btn" target="_blank">Github</a>
+            </div>
+            <p class="link-tip">提示：点击QQ群按钮查看招新群二维码；GitHub链接跳转至团队开源仓库</p>
+        </section>
+
+        <!-- 问答板块 -->
+        <section id="qa" class="qa-section">
+            <h2 class="qa-title">More Questions</h2>
+            <div class="qa-item">
+                <div class="qa-question">1.什么是Geek(极客)？Geek精神又是什么？</div>
+                <div class="qa-answer">拥有好奇之心，改变之力，爱钻研，能折腾。</div>
+            </div>
+            <div class="qa-item">
+                <div class="qa-question">2.招新是安排在什么时间？</div>
+                <div class="qa-answer">按照惯例，正式招新时间是在9月下旬~10月上旬，不过今年会有一些改动，笔试地点一般在9号教学楼。如果想要了解我们，可以加入我们的QQ群，招新具体的安排/变动会在招新群通知。</div>
+            </div>
+            <div class="qa-item">
+                <div class="qa-question">3.我们有考核吗？考核流程是怎样的呀？</div>
+                <div class="qa-answer">嗯...我们一共有一轮笔试和两轮面试。权衡技术、经验和学习能力，第一轮是一些视野性的题目，淘汰率并不高。第二轮单独面试， 根据你的笔试提出技术相关的问题、兴趣爱好、个人看法。最后一轮群面，首先问及时间分配上的问题，其次也会向你提出各种奇怪的问题。这一轮中许多题目其实并不难，也无标准答案，重在考察同学们在压力下的逻辑思维。全部通过成为预备成员啦。</div>
+            </div>
+            <div class="qa-item">
+                <div class="qa-question">4.考核是怎样的形式？</div>
+                <div class="qa-answer">在考核期间每人会拥有一位'长者'带你入门，学习技术与知识，交流经验与想法。完成每周的新人任务后再进行一次考核筛选 后就可以成为Geek组正式成员啦！在考核期必须满足每周30个小时在实验室哦,所以考核期也不可以懈怠哦！</div>
+            </div>
+            <div class="qa-item">
+                <div class="qa-question">5.进入Geek组之后都有什么福利呢？</div>
+                <div class="qa-answer">一对一的新人指引，每一个成员都有会一个mentor, 带你初入门槛，与你一同成长，组内管理较宽松,在尊重其他人的前提下可以尽情发挥自己的个性。打破平淡，与同样疯狂的人把疯狂的idea实现，磨砺耐性、培养思维、成就梦想。Lab设备/网络资源充足，闲暇之余也有组织活动。更有许多的故事等你来听~</div>
+            </div>
+            <div class="qa-item">
+                <div class="qa-question">6.进入团队会影响我的日常学习吗？</div>
+                <div class="qa-answer">你要知道大学是一个可以自由安排自己学习生活的地方。如果你想在上课之余充实自己、激励自己，最好的方法就是和比自己更优秀的人在一起。团队不缺优秀的人，而我们也期待同样优秀的你，让我们一起前进！小组里也有不少保研, 考研的前辈们, 大部分都能找到一个平衡点, 而且团队的经历对你日后读研, 工作都大有裨益。</div>
+            </div>
+            <div class="qa-item">
+                <div class="qa-question">7.老师以及学长学姐们的期望是什么?</div>
+                <div class="qa-answer">我们希望你有很强的自学能力，同时关注新事物、新技术，喜欢挑战，逻辑性强，善于和各种文化的人合作.“每个人都可以做自己想做的事情，每个人的方向不一样。如果你想做产品或有不错的 idea，那么就可以找志同道合的人一起合作。”</div>
+            </div>
+        </section>
+    </div>
+
+    <!-- 二维码弹窗 -->
+    <div class="qrcode-modal" id="qrcodeModal">
+        <div class="qrcode-content">
+            <h3>2023级Geek招新群</h3>
+            <p>群号：299263121</p>
+            <img src="images/qrcode_1699620268564.jpg" alt="Geek招新群二维码" class="qrcode-img">
+            <p>扫码加入或直接搜索群号</p>
+            <button class="close-btn" id="closeBtn">关闭</button>
+        </div>
+    </div>
+
+    <script>
+        // ===================== 邮箱复制功能 =====================
+        const emailCopy = document.getElementById('emailCopy');
+        emailCopy.addEventListener('click', () => {
+            // 调用剪贴板API复制邮箱
+            navigator.clipboard.writeText(emailCopy.textContent)
+                .then(() => {
+                    alert('邮箱地址已复制到剪贴板！');
+                })
+                .catch(err => {
+                    alert('复制失败，请手动复制：' + emailCopy.textContent);
+                });
+        });
+
+        // ===================== 问答折叠/展开功能 =====================
+        const qaQuestions = document.querySelectorAll('.qa-question');
+        qaQuestions.forEach(question => {
+            question.addEventListener('click', () => {
+                // 切换问题激活状态
+                question.classList.toggle('active');
+                // 获取相邻的回答元素
+                const answer = question.nextElementSibling;
+                answer.classList.toggle('show');
+            });
+        });
+
+        // ===================== 锚点平滑滚动 =====================
+        document.querySelectorAll('a[href^="#"]').forEach(anchor => {
+            anchor.addEventListener('click', function (e) {
+                e.preventDefault(); // 阻止默认跳转
+                const targetId = this.getAttribute('href');
+                const targetElement = document.querySelector(targetId);
+                if (targetElement) {
+                    // 平滑滚动到目标位置，减去导航栏高度
+                    window.scrollTo({
+                        top: targetElement.offsetTop - 70,
+                        behavior: 'smooth'
+                    });
+                }
+            });
+        });
+
+        // ===================== 二维码弹窗控制 =====================
+        const qqBtn = document.getElementById('qqBtn');
+        const qrcodeModal = document.getElementById('qrcodeModal');
+        const closeBtn = document.getElementById('closeBtn');
+
+        // 打开弹窗
+        qqBtn.addEventListener('click', () => {
+            qrcodeModal.style.display = 'flex';
+            setTimeout(() => {
+                qrcodeModal.classList.add('show');
+            }, 10);
+        });
+
+        // 关闭弹窗函数：带动画
+        function closeModal() {
+            qrcodeModal.classList.remove('show');
+            setTimeout(() => {
+                qrcodeModal.style.display = 'none';
+            }, 300);
+        }
+
+        // 点击关闭按钮关闭
+        closeBtn.addEventListener('click', closeModal);
+        // 点击遮罩层关闭
+        qrcodeModal.addEventListener('click', (e) => {
+            if (e.target === qrcodeModal) closeModal();
+        });
+        // 按ESC键关闭
+        document.addEventListener('keydown', (e) => {
+            if (e.key === 'Escape' && qrcodeModal.style.display === 'flex') closeModal();
+        });
+    </script>
+    
+    <!-- 底部版权 -->
+    <footer>
+        Copyright ©2002-2022 itawenya.github.io All Rights Reserved. 备案号：有个屁随便写
+    </footer>
+</body>
+</html>
